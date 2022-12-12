@@ -14,6 +14,13 @@ server_address = ('socket', 5000)
 server.connect(server_address)
 server.send(b'00021sinitfeedb')
 
+def fill(data):
+    data = str(data)
+    aux = str(len(data))
+    while len(aux) < 5:
+        aux = '0' + aux
+    return aux
+    
 def addFeedback(feedback):
     cursor = conn.cursor()
     ft = feedback[0]
@@ -26,6 +33,10 @@ def addFeedback(feedback):
     ftimestamp = str(calendar.timegm(current_GMT))
     cursor.execute("INSERT INTO feedback (feedback_type, feedbacker_name, feedbacker_last_name, feedbacker_career, feedbacker_email, feedback_comment, feedback_timestamp) VALUES ('" + ft + "', '" + fn + "', '" + fln + "', '" + fc + "', '" + fe + "', '" + fcomm + "', '" + ftimestamp + "')")
     conn.commit()
+    datos = "FEEDBACK RECIBIDO"
+    aux = fill(len(datos+ 'clien'))
+    msg = aux + 'clien' + datos
+    server.sendall(bytes(msg,'utf-8'))
     pass
 
 
