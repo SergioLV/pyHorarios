@@ -26,7 +26,6 @@ def getEvaluations(carreer):
     cursor = conn.cursor()
     cursor.execute("SELECT url FROM evaluations WHERE carreer = '" + carreer + "';")
     datos = cursor.fetchone()
-# TODO ARREGLAR QUE LLEGA SOLO LA H DEL HTTP AL PARECER
     aux = fill(len(datos[0]+ 'clien'))
     msg = aux + 'clien' + datos[0]
     server.sendall(bytes(msg,'utf-8'))
@@ -43,6 +42,7 @@ while True:
     query = datos.decode()[11:].split("-")
     transaction_type = query[0]
     payload = query[1]
+    print("tr type: " + payload)
     if transaction_type == "geturl":
         getEvaluations(payload.replace("\n",""))
     else:
