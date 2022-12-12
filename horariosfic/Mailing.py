@@ -22,9 +22,15 @@ def fill(data):
         aux = '0' + aux
     return aux
 
-# TODO conexion a la db
+def track(service):
+    ip = socket.gethostbyname(socket.gethostname())
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))
 
 def sendMail(email, mail_content):
+    track("mailing")
     sender_address = 'horariosfic@gmail.com'
     sender_pass = 'mfatbcxzhwkvluox'
     # Obtener suscritos desde la base de datos
@@ -58,7 +64,7 @@ while True:
     query = datos.decode()[11:].split("-")
     transaction_type = query[0]
     payload = query[1:]
-    if transaction_type == "send":
+    if transaction_type == "sendMail":
         sendMail(payload[0], payload[1])
     else:
         print("XD")

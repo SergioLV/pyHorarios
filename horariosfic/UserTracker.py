@@ -46,6 +46,8 @@ while True:
     query = datos.decode()[11:].split("-")
     transaction_type = query[0]
     payload = query[1:]
+    print("guatefac")
+    print(payload)
     if transaction_type == "track":
         track(payload)
     else:

@@ -20,8 +20,16 @@ def fill(data):
     while len(aux) < 5:
         aux = '0' + aux
     return aux
+
+def track(service):
+    ip = socket.gethostbyname(socket.gethostname())
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))    
     
 def addFeedback(feedback):
+    track("feedback")
     cursor = conn.cursor()
     ft = feedback[0]
     fn = feedback[1]

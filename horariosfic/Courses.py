@@ -22,7 +22,15 @@ def fill(data):
         aux = '0' + aux
     return aux
 
+def track(service):
+    ip = socket.gethostbyname(socket.gethostname())
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))
+
 def getCourse(course):
+    track("getCourse")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM informatica_2022_2 WHERE nombre_asig = '" + course + "';")
     datos = cursor.fetchall()
@@ -43,6 +51,7 @@ def getCourse(course):
     pass
 
 def getAll(course):
+    track("getOferta")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM informatica_2022_2 ")
     datos = cursor.fetchall()

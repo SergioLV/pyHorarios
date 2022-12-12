@@ -22,6 +22,12 @@ def fill(data):
         aux = '0' + aux
     return aux
 
+def track(service):
+    ip = socket.gethostbyname(socket.gethostname())
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))
 # TODO conexion a la db
 
 def getSubscribers():
@@ -54,6 +60,7 @@ def sendMail(mail_content):
         text = message.as_string()
         session.sendmail(sender_address, email, text)
         session.quit()
+    track("getSubscribers")
     datos = "CORREOS ENVIADO"
     aux = fill(len(datos+ 'clien'))
     msg = aux + 'clien' + datos
@@ -62,6 +69,7 @@ def sendMail(mail_content):
     
 
 def addSubscriber(email):
+    track("addSubscriber")
     cursor = conn.cursor()
     var = "true"
     cursor.execute("INSERT INTO newsletter (email, subscribed) VALUES ('" + email + "', '" + var + "')")

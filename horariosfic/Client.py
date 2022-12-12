@@ -6,15 +6,6 @@ server.connect(server_address)
 server.send(b'00019sinitclien')
 recibido=server.recv(4096)
 
-def track(service, req):
-    ip = socket.gethostbyname(socket.gethostname())
-    datos = " track-"+ ip +"-"+service
-    aux = fill(len(datos+ 'track'))
-    msg = aux + 'track' + datos
-    print("Request to " + service)
-    print("Request: " + req)
-    server.sendall(bytes(msg,'utf-8'))
-
 def printMenu(service, options):
     print("=========="+service+"==========")
     for idx, value in enumerate(options):
@@ -40,8 +31,6 @@ def sendMessage(service, serviceAction, payload):
     msg = aux + service + datos
     server.sendall(bytes(msg,'utf-8'))
     recibido = server.recv(4096)
-
-    track(service, msg)
 
     if recibido.decode('utf-8').find('clien')!=-1:
         print(recibido)
@@ -70,8 +59,7 @@ def getHorario():
 
 def getOferta():
     # VERIFICAR SI ES QUE ESTA BIEN
-    datos = " getoferta"
-    sendMessage("", "getcourse", [])
+    sendMessage("cours", "getoferta", [])
 
 def evaluations():
     mensaje = input("Ingrese la carrera: ")
@@ -80,7 +68,7 @@ def evaluations():
 def mailing():
     correo = input("Ingrese correo: ")
     mensaje = input("Ingrese el contenido: ")
-    sendMessage("maili", "send", [correo, mensaje])
+    sendMessage("maili", "sendMail", [correo, mensaje])
 
 while True:
     main_menu = False

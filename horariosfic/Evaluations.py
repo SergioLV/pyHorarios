@@ -22,7 +22,16 @@ def fill(data):
         aux = '0' + aux
     return aux
 
+def track(service):
+    ip = socket.gethostbyname(socket.gethostname())
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))
+
 def getEvaluations(carreer):
+    track("evaluations")
+    # DEBERIA DEVOLVER LA URL Y NO LA ESTA DEVOLVIENDO
     cursor = conn.cursor()
     cursor.execute("SELECT url FROM evaluations WHERE carreer = '" + carreer + "';")
     datos = cursor.fetchone()
