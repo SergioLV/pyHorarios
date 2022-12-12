@@ -27,8 +27,8 @@ def getEvaluations(carreer):
     cursor.execute("SELECT url FROM evaluations WHERE carreer = '" + carreer + "';")
     datos = cursor.fetchone()
 # TODO ARREGLAR QUE LLEGA SOLO LA H DEL HTTP AL PARECER
-    aux = fill(len(datos[0][0]+ 'clien'))
-    msg = aux + 'clien' + datos[0][0]
+    aux = fill(len(datos[0]+ 'clien'))
+    msg = aux + 'clien' + datos[0]
     server.sendall(bytes(msg,'utf-8'))
     pass
 

@@ -28,12 +28,17 @@ def getCourse(course):
     datos = cursor.fetchall()
     res = ""
     # LISTO
-    for i in datos:
-        print(res)
-        res+=res.join(str(x) for x in i)
+    print("DATOS")
+    print(datos)
+    for course in datos:
+        print("COURSE")
+        print(course)
+        res += str(course) + ","
 
-    aux = fill(len(datos+ 'clien'))
-    msg = aux + 'clien' + datos
+    aux = fill(len(res+ 'clien'))
+    print("RES")
+    print(res)
+    msg = aux + 'clien' + res
     server.sendall(bytes(msg,'utf-8'))
     pass
 
@@ -41,9 +46,9 @@ def getAll(course):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM informatica_2022_2 ")
     datos = cursor.fetchall()
-    res = ""
-    for i in datos:
-        res+=res.join(str(x) for x in i)
+    # res = ""
+    # for i in datos:
+    #     res+=res.join(str(x) for x in i)
     aux = fill(len(datos+ 'clien'))
     msg = aux + 'clien' + datos
     server.sendall(bytes(msg,'utf-8'))
