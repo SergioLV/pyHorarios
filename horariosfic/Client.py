@@ -1,10 +1,20 @@
 import socket
 
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('socket', 5000)
 server.connect(server_address)
 server.send(b'00019sinitclien')
 recibido=server.recv(4096)
+
+def track(service):
+    # ESTA IP DEBERIA OBTENERSE DESDE EL FRONT
+    ip = socket.gethostbyname(socket.gethostname())
+
+    datos = " track-"+ ip +"-"+service
+    aux = fill(len(datos+ 'track'))
+    msg = aux + 'track' + datos
+    server.sendall(bytes(msg,'utf-8'))
 
 def fill(data):
     data = str(data)
@@ -22,6 +32,7 @@ while True:
         2. Feedback
         3. Cursos
         4. Evaluations
+        5. Mailing
     ==============================
     """)
     opcion = input("OPCION: ")
@@ -43,6 +54,7 @@ while True:
             msg = aux + 'newsl' + datos
             server.sendall(bytes(msg,'utf-8'))
             recibido=server.recv(4096)
+            track("newsl")
             if recibido.decode('utf-8').find('clien')!=-1:
                 print(recibido)
         elif opt == '2':
@@ -52,6 +64,7 @@ while True:
             msg = aux + 'newsl' + datos
             server.sendall(bytes(msg,'utf-8'))
             recibido=server.recv(4096)
+            track("newsl")
             if recibido.decode('utf-8').find('clien')!=-1:
                 print(recibido)
     elif opcion == '2':
@@ -66,6 +79,7 @@ while True:
         msg = aux + 'feedb' + datos
         server.sendall(bytes(msg,'utf-8'))
         recibido=server.recv(4096)
+        track("feedb")
         if recibido.decode('utf-8').find('clien')!=-1:
             print(recibido)
     elif opcion == '3':
@@ -84,6 +98,7 @@ while True:
             msg = aux + 'cours' + datos
             server.sendall(bytes(msg,'utf-8'))
             recibido=server.recv(4096)
+            track("cours")
             if recibido.decode('utf-8').find('clien')!=-1:
                 print(recibido)
         elif opt == '2':
@@ -92,6 +107,7 @@ while True:
             msg = aux + 'cours' + datos
             server.sendall(bytes(msg,'utf-8'))
             recibido=server.recv(4096)
+            track("cours")
             if recibido.decode('utf-8').find('clien')!=-1:
                 print(recibido)
     elif opcion == '4':
@@ -101,8 +117,19 @@ while True:
             msg = aux + 'evalu' + datos
             server.sendall(bytes(msg,'utf-8'))
             recibido=server.recv(4096)
+            track("evalu")
             if recibido.decode('utf-8').find('clien')!=-1:
                 print(recibido)
-
+    elif opcion == '5':
+        correo = input("Ingrese correo: ")
+        mensaje = input("Ingrese el contenido: ")
+        datos = " send-"+ correo + "-"+ mensaje
+        aux = fill(len(datos+ 'maili'))
+        msg = aux + 'maili' + datos
+        server.sendall(bytes(msg,'utf-8'))
+        recibido=server.recv(4096)
+        track("maili")
+        if recibido.decode('utf-8').find('clien')!=-1:
+            print(recibido)
 
 
